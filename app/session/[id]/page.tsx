@@ -124,7 +124,7 @@ export default function SessionRoom() {
       sock.emit('session:join', { sessionId: params.id, userId: u.id, role: u.role });
 
       sock.on('chat:message', (msg) => setMessages(p => [...p, msg]));
-      sock.on('code:delta',   (delta: string) => { setCode(delta); });
+      sock.on('code:delta',   (delta: any) => { setCode(delta); });
       // GEMINI FIX: mentor initiates the call when student joins
       sock.on('user:joined',  () => {
         setPeerOnline(true);
