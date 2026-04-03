@@ -1,25 +1,42 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-type Tab     = 'login' | 'signup';
-type Role    = 'student' | 'mentor';
-type Status  = 'idle' | 'loading' | 'error';
+// Vercel hint to skip static generation for this route
+export const dynamic = 'force-dynamic';
 
+type Tab    = 'login' | 'signup';
+type Role   = 'student' | 'mentor';
+type Status = 'idle' | 'loading' | 'error';
+
+// 1. MAIN WRAPPER (This is what Next.js renders)
 export default function AuthPage() {
-  const router       = useRouter();
-  const params       = useSearchParams();
-  const [tab,    setTab]    = useState<Tab>((params.get('tab') as Tab) ?? 'login');
-  const [role,   setRole]   = useState<Role>((params.get('role') as Role) ?? 'student');
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text)' }}>
+        Loading MentorSpace Auth...
+      </div>
+    }>
+      <AuthContent />
+    </Suspense>
+  );
+}
+
+// 2. ACTUAL CONTENT (This handles URL params and Logic)
+function AuthContent() {
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const [tab, setTab] = useState<Tab>((params.get('tab') as Tab) ?? 'login');
+  const [role, setRole] = useState<Role>((params.get('role') as Role) ?? 'student');
   const [status, setStatus] = useState<Status>('idle');
   const [errMsg, setErrMsg] = useState('');
 
   // Form fields
-  const [email,    setEmail]    = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
 
