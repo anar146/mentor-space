@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"app/session/[id]/page.tsx -> @monaco-editor/react\":{\"id\":\"app/session/[id]/page.tsx -> @monaco-editor/react\",\"files\":[\"static/chunks/_app-pages-browser_node_modules_monaco-editor_react_dist_index_mjs.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST='{"app/session/[id]/page.tsx -> @monaco-editor/react":{"id":7270,"files":["static/chunks/270.59c43b6d4dd259ae.js"]}}';
